@@ -9,7 +9,6 @@
   --accent-olive: #8B7F5C;
 
   --border-hairline: #E2DACB;
-  --border-dark: #23262F;
 
   --font-serif: 'Lora', Georgia, serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -28,16 +27,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family:
-    source-code-pro,
-    Menlo,
-    Monaco,
-    Consolas,
-    "Courier New",
-    monospace;
-}
-
 .app-shell {
   position: relative;
   width: 100vw;
@@ -48,70 +37,8 @@ code {
 .pipeline-canvas {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
   background: var(--bg-cream);
   z-index: 1;
-}
-
-.pipeline-toolbar {
-  position: fixed;
-  top: 10px;
-  left: 0;
-  right: 0;
-
-  z-index: 20;
-
-  display: flex;
-  flex-direction: column;
-
-  padding: 16px 32px;
-
-  background: var(--bg-cream);
-}
-
-.toolbar-label {
-  margin-bottom: 15px;
-
-  font-size: 11px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-
-  color: var(--accent-olive);
-}
-
-.toolbar-nodes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-
-  margin-bottom: 10px;
-}
-
-.separator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.line {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--text-muted));
-}
-
-.line:last-child {
-  background: linear-gradient(to left, transparent, var(--text-muted));
-}
-
-.diamond {
-  width: 5px;
-  height: 5px;
-
-  flex-shrink: 0;
-
-  background: var(--text-muted);
-  transform: rotate(45deg);
 }
 
 .add-node-button,
@@ -347,12 +274,6 @@ code {
 
 .node-handle-label-left {
   transform: translateX(calc(-100% - 10px));
-}
-
-.node-handle-row {
-  display: flex;
-  align-items: center;
-  transform: translateY(-50%);
 }
 
 .react-flow__node {

@@ -3,7 +3,7 @@ import { useRef, useState, useCallback } from 'react';
 import ReactFlow, { Controls, Background, MiniMap } from 'reactflow';
 import { useStore } from './store';
 import { shallow } from 'zustand/shallow';
-import { nodeConfigs } from './nodes/nodesConfig';
+import { buildNode } from './nodes/buildNode';
 import {
   InputNode, OutputNode, LLMNode, TextNode,
   MathNode, FilterNode, ApiRequestNode, TimerNode, MergeNode,
@@ -41,33 +41,19 @@ export const PipelineUI = () => {
   const { nodes, edges, getNodeID, addNode, onNodesChange, onEdgesChange, onConnect } =
     useStore(selector, shallow);
 
-  const onDrop = useCallback(
+ const onDrop = useCallback(
     (event) => {
       event.preventDefault();
       const raw = event.dataTransfer.getData('application/reactflow');
       if (!raw || !reactFlowInstance) return;
-
       const { nodeType } = JSON.parse(raw);
       if (!nodeType) return;
-
       const bounds = reactFlowWrapper.current.getBoundingClientRect();
       const position = reactFlowInstance.screenToFlowPosition({
         x: event.clientX - bounds.left,
         y: event.clientY - bounds.top,
       });
-
-      const nodeID = getNodeID(nodeType);
-      const config = nodeConfigs[nodeType];
-      const defaults = config
-        ? Object.fromEntries(config.fields.map((f) => [f.name, f.default]))
-        : {};
-
-      addNode({
-        id: nodeID,
-        type: nodeType,
-        position,
-        data: { id: nodeID, nodeType, ...defaults },
-      });
+      addNode(buildNode(nodeType, position, getNodeID));
     },
     [reactFlowInstance, addNode, getNodeID]
   );
@@ -109,10 +95,11 @@ export const PipelineUI = () => {
         <MiniMap
           pannable
           zoomable
-          nodeColor="#14161C"
+          nodeColor="#FDF6EC"
           nodeStrokeWidth={0}
-          maskColor="rgba(246, 241, 231, 0.55)"
           style={{ width: 160, height: 110 }}
+          maskColor="transparent"
+          maskStrokeColor="transparent"
         />
       </ReactFlow>
     </div>

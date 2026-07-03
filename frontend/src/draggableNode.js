@@ -1,7 +1,7 @@
 // draggableNode.js
 import { useStore } from './store';
 import { shallow } from 'zustand/shallow';
-import { nodeConfigs } from './nodes/nodesConfig';
+import { buildNode } from './nodes/buildNode';
 
 const selector = (state) => ({
   nodes: state.nodes,
@@ -12,24 +12,10 @@ const selector = (state) => ({
 export const DraggableNode = ({ type, label }) => {
   const { nodes, getNodeID, addNode } = useStore(selector, shallow);
 
-  const buildNode = (position) => {
-    const nodeID = getNodeID(type);
-    const config = nodeConfigs[type];
-    const defaults = config
-      ? Object.fromEntries(config.fields.map((f) => [f.name, f.default]))
-      : {};
-    return {
-      id: nodeID,
-      type,
-      position,
-      data: { id: nodeID, nodeType: type, ...defaults },
-    };
-  };
-
   const handleClick = () => {
     const cascade = nodes.length % 8;
     const position = { x: 400 + cascade * 32, y: 200 + cascade * 32 };
-    addNode(buildNode(position));
+    addNode(buildNode(type, position, getNodeID));
   };
 
   const handleDragStart = (event) => {

@@ -27,7 +27,7 @@ export const nodeConfigs = {
   },
   text: {
     title: 'Text',
-    fields: [{ name: 'text', label: '', type: 'textarea', default: '{{input}}' }],
+    fields: [{ name: 'text', label: '', type: 'textarea', default: '<input>'  }],
     handles: [],
     computeHandles: (values) => {
       const text = values.text || '';
@@ -55,7 +55,6 @@ export const nodeConfigs = {
     },
   },
 
-  // ---- 5 new nodes demonstrating the abstraction ----
   math: {
     title: 'Math Operation',
     fields: [

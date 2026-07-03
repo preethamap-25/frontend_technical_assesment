@@ -9,8 +9,6 @@ const selector = (state) => ({ updateNodeField: state.updateNodeField, deleteNod
 const MAX_TEXTAREA_WIDTH = 400;
 const MIN_TEXTAREA_WIDTH = 180;
 
-// Measures the widest line of text using an offscreen canvas so we can size
-// the textarea to fit its content, capped at MAX_TEXTAREA_WIDTH.
 const measureTextWidth = (text, font) => {
   const canvas = measureTextWidth._canvas || (measureTextWidth._canvas = document.createElement('canvas'));
   const ctx = canvas.getContext('2d');
@@ -35,17 +33,12 @@ export const BaseNode = ({ id, data, selected, config }) => {
 
   const allHandles = config.computeHandles ? config.computeHandles(values) : config.handles;
 
-  // Variable handles (dynamic, from {{...}} detection) only render when the node is selected.
-  // Static handles (source/output, LLM ports, etc.) always render.
   const visibleHandles = allHandles.filter((h) => !h.variable || selected);
 
-  // Re-measure handle positions whenever the visible set changes (selection toggle,
-  // or the underlying text edits add/remove variables).
   useEffect(() => {
     updateNodeInternals(id);
   }, [visibleHandles.length, selected, id, updateNodeInternals]);
 
-  // Auto-resize textareas: height fits content, width fits the longest line up to a cap
   useEffect(() => {
     Object.entries(textareaRefs.current).forEach(([name, el]) => {
       if (!el) return;
@@ -59,8 +52,7 @@ export const BaseNode = ({ id, data, selected, config }) => {
     });
   }, [values]);
 
-  // Auto-close "{{" -> "{{}}" with cursor placed in between, code-editor style
-  const handleTextareaChange = (name, e) => {
+    const handleTextareaChange = (name, e) => {
     const el = e.target;
     const newValue = el.value;
     const prevValue = values[name] || '';
