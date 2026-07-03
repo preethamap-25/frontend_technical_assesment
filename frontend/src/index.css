@@ -136,7 +136,9 @@ code {
 
 .add-node-button {
   padding: 10px 20px;
+  flex-shrink: 0;
   cursor: grab;
+  white-space: nowrap;
 }
 
 .add-node-button:hover {
@@ -644,4 +646,66 @@ code {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+.node-library {
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  max-width: 92vw;
+}
+
+.node-library-inner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 8px 32px rgba(20, 22, 28, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-radius: 10px;
+  transition: box-shadow 0.2s ease;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.node-library-inner:hover {
+  box-shadow:
+    0 10px 40px rgba(20, 22, 28, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.node-library-label {
+  font-size: 11px;
+  line-height: 1.35;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-olive);
+  white-space: nowrap;
+  padding-left: 2px;
+  flex-shrink: 0;
+  text-align: left;
+}
+
+.node-library-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(20, 22, 28, 0.12);
+  flex-shrink: 0;
+}
+
+.node-library-items {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  border-radius: 20px;
 }
