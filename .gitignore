@@ -25,3 +25,4 @@ yarn-error.log*
 vectorshift/
 __pycache__/*
 
+.git/
